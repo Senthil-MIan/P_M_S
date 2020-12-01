@@ -17,34 +17,71 @@ import com.wf.training.spring.maven.web.model.Investor;
 import com.wf.training.spring.maven.web.model.LoginPage;
 
 @Controller
-@RequestMapping("/login")
+//@RequestMapping("/login")
 public class LoginPageController {
 
-	//dashboard for employee
-	// @RequestMapping("/home")  // /employee/home
+	// dashboard for employee
+	// @RequestMapping("/home") // /employee/home
 	// multiple url can be mapped
-	@RequestMapping(value= {"/investordashboard","/backofficehomepage"})
-	public String register(Model model) {
-		// business logic
-		
-		// share a blank/empty employee object with jsp to map with spring form
-		LoginPage loginpage = new LoginPage();
-		model.addAttribute("loginpage", loginpage);
-		
-		String loginuserid= loginpage.getUserid();
-		String loginpwd= loginpage.getPassword();
-		
-		if(loginuserid.equalsIgnoreCase("admin") && loginpwd.equalsIgnoreCase("admin"))
-			return "BackOfficeHomePage";
-		else
-			return "InvestorDashboardPage";
-	}
 	
-//	@RequestMapping("/investorlogin")
-//	public String investorlogin() {
-//		// business logic
-//		
-//		return "LoginPage";
-//	}
+//	  @RequestMapping(value= {"/investordashboard","/backofficehomepage",""})
+//	  public String register(Model model) { // business logic
+	  
+	  // share a blank/empty employee object with jsp to map with spring form
+//	  LoginPage loginpage = new LoginPage(); model.addAttribute("loginpage",
+//	  loginpage);
+//	  
+//	  String loginuserid= loginpage.getUserid(); String loginpwd=
+//	  loginpage.getPassword();
+//	  
+//	  if(loginuserid.equalsIgnoreCase("admin") &&
+//	  loginpwd.equalsIgnoreCase("admin")) return "BackOfficeHomePage"; else return
+//	  "InvestorDashboardPage"; }
+	 
+
+	@GetMapping("/login")
+	public String login(Model model) {
+		LoginPage loginpage = new LoginPage();
+		model.addAttribute("loginpage",
+				  loginpage);
+		// business logic
+
+		return "LoginPage";
+	}
+
+//	@RequestMapping("/auth")
+	@PostMapping("/auth")
+	public String auth(@Valid @ModelAttribute LoginPage loginpage, BindingResult result) {
+		// business logic
+		LoginPage loginpage1 = new LoginPage();
+		if (result.hasErrors()) {
+
+			// revert back the entry form
+//			model.addAttribute("loginpage",
+//					  loginpage);
+			return "LoginPage";
+
+		}
+
+		String userName = loginpage.getUserid();
+		String password = loginpage.getPassword();
+
+		if (userName.equalsIgnoreCase("admin") && password.equalsIgnoreCase("admin")) {
+			return "admin";
+		}
+
+		if (userName.equalsIgnoreCase("investor") && password.equalsIgnoreCase("investor")) {
+			return "InvestorDashboardPage";
+		}
+
+		if (userName.equalsIgnoreCase("backoffice") && password.equalsIgnoreCase("backoffice")) {
+			return "backofficerep";
+		}
+		
+//		model.addAttribute("loginpage",
+//				loginpage1);
+		return "LoginPage";
+
+	}
 
 }

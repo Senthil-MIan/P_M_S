@@ -34,14 +34,14 @@ public class InvestorRegistrationController {
 		return "InvestorRegistrationPage";
 	}
 	
-	@RequestMapping("/investorlogin")
-	public String investorlogin(Model model) {
-		// business logic
-		
-		LoginPage loginpage = new LoginPage();
-		model.addAttribute("loginpage", loginpage);
-		return "LoginPage";
-	}
+	/*
+	 * @RequestMapping("/login") public String investorlogin(Model model) { //
+	 * business logic
+	 * 
+	 * LoginPage loginpage = new LoginPage(); model.addAttribute("loginpage",
+	 * loginpage); return "LoginPage"; }
+	 */
+	
 	
 	@RequestMapping("/backofficelogin")
 	public String backofficelogin() {
